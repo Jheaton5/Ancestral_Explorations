@@ -32,16 +32,17 @@ void print_menu()
 	int c;				
 	MENU *my_menu;												/* pointer to the menu block */
 	int n_choices, i;
-	initscr();
-	cbreak();
-	noecho();
-	keypad(stdscr, TRUE);
+	initscr();													/* set ncurses mode */
+	cbreak();													/* makes it unnecessary to hit enter on keyboard input */
+	noecho();													/* charactes typed do not appear on screen */
+	keypad(stdscr, TRUE);										/* enables the keypad of the user's terminal */
 	
-	n_choices = ARRAY_SIZE(choices);
+	n_choices = ARRAY_SIZE(choices);							/* returns the number of elements in choices */
+	set_menu_format(NULL,n_choices,1);
 	my_items = (ITEM **)calloc(n_choices + 1, sizeof(ITEM *)); 	/* allocate memory for the size of the whole menu */
 
 	for(i = 0; i < n_choices; ++i)								/* loop through the menu items */
-	        my_items[i] = new_item(choices[i], choices[i]); 	/* set up the menu items with new menu */
+	        my_items[i] = new_item(choices[i], NULL); 	/* set up the menu items with new_item() */
 	my_items[n_choices] = (ITEM *)NULL;							/* set the last item to NULL */
 
 	my_menu = new_menu((ITEM **)my_items);						/* create the menu */
